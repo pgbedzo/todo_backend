@@ -4,10 +4,10 @@ const { ToDo } = require('../Model/todo');
 const getAllTodos = (req, res) => {
     ToDo.find()
         .then((response) => {
-            res.send(response);
+            res.status(200).send(response);
         })
         .catch((err) => {
-            res.send("an error occured");
+            res.status(500).send("an error occured");
         });
 
 
@@ -18,10 +18,10 @@ const getTodoById=(req,res)=>{
     const id=req.params.id
     ToDo.findById(id)
     .then((response)=>{
-        res.send(response);
+        res.status(200).send(response);
     })
     .catch((err)=>{
-        res.send( 'an error occured');
+        res.status(500).send( 'an error occured');
     });
     
 };
@@ -30,35 +30,35 @@ const getTodoById=(req,res)=>{
 const createTodo=(req,res)=>{
         const todo =new ToDo( req.body);
         todo.save().then(response=>{
-            res.send(response)})
+            res.status(201).send(response)})
         .catch(err=>{
             console.log(err);
-            res.send(' an error occured');
+            res.status(500).send(' an error occured');
         });
  };
 
 
-const deleteTodo =(req,res)=>{ 
+    const deleteTodo =(req,res)=>{ 
         const id =req.params.id;
         ToDo.findByIdAndDelete(id)
         .then((response)=>{ 
-            res.send('Todo with specified ID delete');
+            res.status(200).send('Todo with specified ID delete');
         })
         . catch((err)=>{
             console.log(err);
-            res.send( 'an error occured');
+            res.status(500).send( 'an error occured');
         });
-    };
+    },
 
-    const updateTodo =(req,res)=>{ 
+    const updateTodo = (req,res) =>{ 
         const id = req.params.id;
 
         ToDo.findByIdAndUpdate({_id:id},req.body)
         .then((response)=>{ 
-            res.send("Todo with specified ID update");
+            res.status(201).send("Todo with specified ID update");
     }).catch((err)=>{
         console.log(err);
-        res.send("an error occured",err);
+        res.status(500).send("an error occured",err);
 
     });
     };
